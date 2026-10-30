@@ -32,7 +32,7 @@ function useActiveSection() {
     const io = new IntersectionObserver((es) => {
       const vis = es.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
       if (vis) setActive(vis.target.id);
-    }, { rootMargin: "-40% 0px -55% 0px" });
+    }, { rootMargin: "-20% 0px -70% 0px" });
     els.forEach((e) => io.observe(e));
     return () => io.disconnect();
   }, []);
