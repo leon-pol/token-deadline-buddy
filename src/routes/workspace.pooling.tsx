@@ -19,10 +19,10 @@ function Pooling() {
           {pools.map((g) => {
             const total = g.reduce((a, i) => a + (i.quantity ?? 0), 0);
             return (
-              <div key={g[0].id} className="surface p-5">
-                <div className="flex items-center justify-between gap-2"><h3 className="font-semibold">{g[0].part}</h3><Pill tone="primary">{g.length} items</Pill></div>
-                <p className="text-sm text-muted-foreground">{g[0].category}</p>
-                <div className="mt-4 font-display text-2xl font-semibold">{total.toLocaleString()} <span className="text-sm text-muted-foreground">{g[0].unit} combined</span></div>
+              <div key={g[0]!.id} className="surface p-5">
+                <div className="flex items-center justify-between gap-2"><h3 className="font-semibold">{g[0]!.part}</h3><Pill tone="primary">{g.length} items</Pill></div>
+                <p className="text-sm text-muted-foreground">{g[0]!.category}</p>
+                <div className="mt-4 font-display text-2xl font-semibold">{total.toLocaleString()} <span className="text-sm text-muted-foreground">{g[0]!.unit} combined</span></div>
                 <ul className="mt-3 space-y-1 text-sm">{g.map((i) => <li key={i.id} className="flex justify-between"><span className="text-muted-foreground">{i.batchId} · row {i.rowNumber}</span><span>{i.quantity?.toLocaleString()}</span></li>)}</ul>
               </div>
             );

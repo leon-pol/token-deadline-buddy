@@ -179,9 +179,9 @@ function Landing() {
             <div className="surface min-h-80 p-8">
               <AnimatePresence mode="wait">
                 <motion.div key={feat} initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }} transition={{ duration: 0.3 }}>
-                  <div className="flex items-center justify-between"><h3 className="text-2xl font-semibold">{FEATURES[feat][0]}</h3><Pill tone="warning">Illustrative</Pill></div>
-                  <p className="mt-3 max-w-xl text-muted-foreground">{FEATURES[feat][1]}</p>
-                  <div className="mt-8 grid gap-3 sm:grid-cols-3">{FEATURES[feat][2].map((x) => <div key={x} className="rounded-xl bg-secondary p-4 text-sm font-medium">{x}</div>)}</div>
+                  <div className="flex items-center justify-between"><h3 className="text-2xl font-semibold">{FEATURES[feat]![0]}</h3><Pill tone="warning">Illustrative</Pill></div>
+                  <p className="mt-3 max-w-xl text-muted-foreground">{FEATURES[feat]![1]}</p>
+                  <div className="mt-8 grid gap-3 sm:grid-cols-3">{FEATURES[feat]![2].map((x) => <div key={x} className="rounded-xl bg-secondary p-4 text-sm font-medium">{x}</div>)}</div>
                 </motion.div>
               </AnimatePresence>
             </div>

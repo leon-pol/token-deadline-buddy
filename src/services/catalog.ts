@@ -23,7 +23,7 @@ export function getCatalog() {
       s = {
         supplier_id: o.supplier_id, company_name: o.company_name, company_type: o.company_type, country: o.country,
         certifications: o.certifications.split(";").map((x) => x.trim()).filter(Boolean),
-        capabilities: (r.manufacturing_capability || "").split(";").map((x) => x.trim()).filter(Boolean),
+        capabilities: (r["manufacturing_capability"] || "").split(";").map((x) => x.trim()).filter(Boolean),
         offerings: [],
       };
       map.set(o.supplier_id, s);

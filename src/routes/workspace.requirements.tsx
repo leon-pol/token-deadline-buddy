@@ -45,7 +45,7 @@ function Requirements() {
       <div className="mt-8 space-y-6">
         {batches.length === 0 && <Empty icon={<FileUp className="size-5" />} title="No requirement batches" body="Uploaded batches appear here with validation results for each line item." />}
         {batches.map((b) => {
-          const rows = b.itemIds.map((id) => items[id]);
+          const rows = b.itemIds.map((id) => items[id]!);
           const review = rows.filter((r) => r.status === "Needs Review").length;
           return (
             <section key={b.id} className="surface overflow-hidden">

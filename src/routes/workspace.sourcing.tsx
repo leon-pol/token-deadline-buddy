@@ -16,12 +16,13 @@ function Sourcing() {
   const [active, setActive] = useState<string | null>(null);
   const nav = useNavigate();
   const { offerings } = getCatalog();
-  const item = items.find((i) => i.id === active) ?? items[0];
+  const found = items.find((i) => i.id === active) ?? items[0];
 
   if (!items.length)
     return (<><PageHeader title="Sourcing Options" description="Top-three supplier shortlist for each validated line item." />
       <Empty icon={<Search className="size-5" />} title="No validated line items" body="Upload requirements and resolve validation issues to see matched suppliers." action={<Button asChild><Link to="/workspace/requirements">Upload Requirements</Link></Button>} /></>);
 
+  const item = found!;
   const cands = rankCandidates(item, offerings);
   const alternatives = offerings.filter((o) => o.component_category.toLowerCase() === item.category.toLowerCase() && !cands.some((c) => c.offering.offering_id === o.offering_id)).slice(0, 4);
   const existing = negs.find((n) => n.itemId === item.id);
@@ -73,7 +74,7 @@ function Sourcing() {
           )}
           <div className="mt-4 flex flex-wrap items-center gap-3">
             {existing ? <Pill tone="primary">Negotiation {existing.status}</Pill> : (
-              <Button disabled={!selections[item.id]} onClick={() => negotiate(selections[item.id])}>Start Negotiation with Selected Supplier</Button>
+              <Button disabled={!selections[item.id]} onClick={() => negotiate(selections[item.id]!)}>Start Negotiation with Selected Supplier</Button>
             )}
             <SimTag />
           </div>

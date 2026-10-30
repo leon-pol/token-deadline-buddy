@@ -29,7 +29,7 @@ async function readRows(file: File): Promise<Record<string, unknown>[]> {
   }
   if (/\.xlsx?$/i.test(file.name)) {
     const wb = XLSX.read(await file.arrayBuffer());
-    return XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { defval: "" });
+    return XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]!]!, { defval: "" });
   }
   throw new Error("Unsupported file type. Upload a CSV or XLSX file.");
 }
@@ -39,14 +39,14 @@ export async function parseRequirementFile(file: File): Promise<{ batch: Require
   if (file.size > MAX_BYTES) throw new Error("File exceeds the 5 MB limit.");
   const rows = await readRows(file);
   if (!rows.length) throw new Error("No requirement rows were found in this file.");
-  const headers = Object.keys(rows[0]);
+  const headers = Object.keys(rows[0]!);
   const mapping: Record<string, string> = {};
   const used = new Set<string>();
   for (const [field, aliases] of Object.entries(ALIASES)) {
     const h = headers.find((h) => !used.has(h) && aliases.includes(norm(h)));
     if (h) { mapping[field] = h; used.add(h); }
   }
-  if (!mapping.part) throw new Error("No part or material column was detected. Include a column such as “part_name” or “material_name”.");
+  if (!mapping["part"]) throw new Error("No part or material column was detected. Include a column such as “part_name” or “material_name”.");
   const batchId = `B-${Date.now().toString(36).toUpperCase()}`;
   const items: RequirementItem[] = rows.map((r, i) => {
     const get = (f: string) => (mapping[f] ? String(r[mapping[f]] ?? "").trim() : "");
