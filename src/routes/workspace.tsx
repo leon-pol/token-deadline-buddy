@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { LayoutDashboard, FileUp, Layers, Search, Handshake, CheckCircle2, Menu, X, Mail } from "lucide-react";
 import { useStore } from "@/services/store";
 import { Pill } from "@/components/bedro/ui";
+import { SPRING, EASE } from "@/components/bedro/glass";
 
 export const Route = createFileRoute("/workspace")({
   head: () => ({
@@ -34,9 +35,9 @@ function NavList({ onNav }: { onNav?: () => void }) {
         const active = to === "/workspace" ? path === "/workspace" || path === "/workspace/" : path.startsWith(to);
         return (
           <Link key={to} to={to} onClick={onNav}
-            className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring ${active ? "text-accent-foreground" : "text-muted-foreground hover:bg-secondary hover:text-foreground"}`}>
-            {active && <motion.span layoutId="nav-active" className="absolute inset-0 rounded-xl bg-accent" transition={{ type: "spring", stiffness: 400, damping: 34 }} />}
-            <Icon className="relative size-4" />
+            className={`group relative flex items-center gap-3 rounded-full px-3.5 py-2.5 text-sm font-medium outline-none transition-[color,background-color,transform] duration-200 active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-ring ${active ? "font-semibold text-accent-foreground" : "text-muted-foreground hover:bg-card/70 hover:text-foreground"}`}>
+            {active && <motion.span layoutId="nav-active" className="glass-segment-active absolute inset-0 rounded-full" transition={SPRING} />}
+            <Icon className={`relative size-4 transition-transform duration-200 ${active ? "text-primary" : "group-hover:translate-x-0.5"}`} />
             <span className="relative">{label}</span>
           </Link>
         );
@@ -90,7 +91,7 @@ function WorkspaceLayout() {
         <button className="rounded-lg p-2 hover:bg-secondary lg:hidden" aria-label="Open navigation" onClick={() => setMobile(true)}><Menu className="size-5" /></button>
         <span className="font-display font-bold lg:hidden">BEDRO</span>
         <span className="hidden text-sm text-muted-foreground lg:block">Procurement Workspace</span>
-        <button onClick={() => setComms(true)} aria-label="Supplier Communications" className="ml-auto rounded-xl p-2.5 text-muted-foreground transition hover:bg-secondary hover:text-foreground">
+        <button onClick={() => setComms(true)} aria-label="Supplier Communications" className="glass-capsule ml-auto grid size-10 place-items-center rounded-full text-muted-foreground transition hover:text-foreground active:scale-95 focus-visible:ring-2 focus-visible:ring-ring outline-none">
           <Mail className="size-5" />
         </button>
       </header>
@@ -107,7 +108,7 @@ function WorkspaceLayout() {
         )}
       </AnimatePresence>
       <main className="px-4 py-8 lg:ml-[264px] lg:px-8">
-        <motion.div key={path} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="mx-auto max-w-6xl">
+        <motion.div key={path} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35, ease: EASE }} className="mx-auto max-w-6xl">
           <Outlet />
         </motion.div>
       </main>
