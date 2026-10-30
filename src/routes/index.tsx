@@ -174,7 +174,7 @@ function Landing() {
           <div className="mt-12 grid items-start gap-6 lg:grid-cols-[320px_1fr]">
             <GlassSegmentedControl ariaLabel="Product capabilities" value={String(feat)} onChange={(v) => setFeat(+v)}
               className="lg:flex-col lg:items-stretch lg:rounded-3xl lg:overflow-visible"
-              segments={FEATURES.map(([t], i) => ({ value: String(i), label: t, icon: FICONS[i] }))} />
+              segments={FEATURES.map(([t], i) => ({ value: String(i), label: t, icon: FICONS[i]! }))} />
             <div className="surface min-h-80 p-8">
               <AnimatePresence mode="wait">
                 <motion.div key={feat} initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -16 }} transition={{ duration: 0.3 }}>
