@@ -1,5 +1,5 @@
-import { useId, type ComponentType, type ReactNode, type ButtonHTMLAttributes } from "react";
-import { motion } from "framer-motion";
+import { useId, type ComponentType, type ReactNode } from "react";
+import { motion, type HTMLMotionProps } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 /** Shared motion tokens — use these everywhere for consistent timing. */
@@ -35,7 +35,7 @@ export function GlassSegmentedControl<T extends string>({
   );
 }
 
-type BtnProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onAnimationStart" | "onDrag" | "onDragStart" | "onDragEnd"> & {
+type BtnProps = Omit<HTMLMotionProps<"button">, "children"> & {
   variant?: "primary" | "glass"; size?: "md" | "lg"; children: ReactNode;
 };
 export function GlassButton({ variant = "primary", size = "md", className, children, ...p }: BtnProps) {
