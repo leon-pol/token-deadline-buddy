@@ -124,7 +124,7 @@ function Landing() {
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div><p className="text-xs font-bold tracking-widest text-primary">PROCUREMENT WORKSPACE</p>
               <h2 className="mt-3 max-w-xl text-4xl font-bold">From requirement file to sourcing decision.</h2></div>
-            <Button size="lg" asChild className="bg-gradient-primary shadow-elegant"><Link to="/workspace">Open Procurement Workspace <ArrowRight className="size-4" /></Link></Button>
+            <Button size="lg" asChild className="rounded-full bg-gradient-primary shadow-elegant transition-shadow hover:shadow-glow"><Link to="/workspace">Open Procurement Workspace <ArrowRight className="size-4" /></Link></Button>
           </div>
           <div className="surface mt-10 grid gap-4 p-4 md:grid-cols-4 md:p-6">
             <div className="col-span-full flex items-center justify-between"><span className="text-sm font-semibold">Workspace preview</span><Pill tone="warning">Illustrative</Pill></div>
@@ -220,7 +220,7 @@ function Landing() {
               ))}
               <label className="text-sm font-medium sm:col-span-2">Context (optional)<textarea value={form.context} onChange={(e) => setForm({ ...form, context: e.target.value })} rows={3} className="mt-1.5 w-full rounded-lg border bg-background px-3 py-2.5 outline-none focus:ring-2 focus:ring-ring" /></label>
               {err && <p role="alert" className="text-sm text-destructive sm:col-span-2">{err}</p>}
-              <Button type="submit" size="lg" className="bg-gradient-primary shadow-elegant sm:col-span-2">Submit Access Request</Button>
+              <Button type="submit" size="lg" className="rounded-full bg-gradient-primary shadow-elegant sm:col-span-2">Submit Access Request</Button>
             </form>
           )}
         </div>
