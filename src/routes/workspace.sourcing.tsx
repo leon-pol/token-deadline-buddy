@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Search, Check, AlertCircle } from "lucide-react";
+import { Search, Check, AlertCircle, Trophy, GitCompare } from "lucide-react";
+import { GlassSegmentedControl } from "@/components/bedro/glass";
 import { Button } from "@/components/ui/button";
 import { Empty, PageHeader, Pill, SimTag, money } from "@/components/bedro/ui";
 import { actions, useStore } from "@/services/store";
@@ -14,6 +15,7 @@ function Sourcing() {
   const selections = useStore((s) => s.selections);
   const negs = useStore((s) => s.negotiations);
   const [active, setActive] = useState<string | null>(null);
+  const [view, setView] = useState<"shortlist" | "alternatives">("shortlist");
   const nav = useNavigate();
   const { offerings } = getCatalog();
   const found = items.find((i) => i.id === active) ?? items[0];
@@ -51,6 +53,9 @@ function Sourcing() {
           ))}
         </div>
         <div>
+          <GlassSegmentedControl ariaLabel="Sourcing view" size="sm" value={view} onChange={setView} className="mb-5"
+            segments={[{ value: "shortlist", label: "Top-3 Shortlist", icon: Trophy }, { value: "alternatives", label: `Alternatives (${alternatives.length})`, icon: GitCompare }]} />
+          {view === "shortlist" && <>
           <h2 className="font-semibold">Shortlist — {item.part}</h2>
           {cands.length === 0 ? <p className="mt-3 text-sm text-muted-foreground">No eligible supplier offerings matched this item in the sample catalogue.</p> : (
             <div className="mt-3 grid gap-4 md:grid-cols-3">
@@ -58,7 +63,7 @@ function Sourcing() {
                 const sel = selections[item.id] === c.offering.offering_id;
                 return (
                   <button key={c.offering.offering_id} onClick={() => actions.selectSupplier(item.id, c.offering.offering_id)}
-                    className={`surface p-4 text-left transition hover:-translate-y-0.5 ${sel ? "ring-2 ring-primary" : ""}`}>
+                    className={`surface p-4 text-left outline-none transition duration-200 hover:-translate-y-0.5 hover:shadow-elegant active:scale-[0.99] focus-visible:ring-2 focus-visible:ring-ring ${sel ? "ring-2 ring-primary" : ""}`}>
                     <div className="flex items-center justify-between"><Pill tone="primary">#{idx + 1} · Fit {c.score}</Pill>{sel && <Check className="size-4 text-primary" />}</div>
                     <div className="mt-3 font-semibold">{c.offering.company_name}</div>
                     <div className="text-xs text-muted-foreground">{c.offering.material_name} · {c.offering.country_of_origin}</div>
@@ -78,15 +83,16 @@ function Sourcing() {
             )}
             <SimTag />
           </div>
-          {alternatives.length > 0 && (
-            <div className="mt-10">
+          </>}
+          {view === "alternatives" && (alternatives.length === 0 ? <p className="text-sm text-muted-foreground">No other same-category offerings in the sample catalogue.</p> : (
+            <div>
               <h2 className="font-semibold">Component alternatives</h2>
               <p className="text-sm text-muted-foreground">Other offerings in the same category. Qualification by your engineering team is required.</p>
               <div className="mt-3 grid gap-3 md:grid-cols-2">
                 {alternatives.map((o) => <div key={o.offering_id} className="surface p-4 text-sm"><div className="font-medium">{o.material_name}</div><div className="text-xs text-muted-foreground">{o.company_name} · {o.material_grade}</div><div className="mt-2 text-xs">{o.specification}</div></div>)}
               </div>
             </div>
-          )}
+          ))}
         </div>
       </div>
     </>
